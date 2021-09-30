@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 import '../styles/tasklist.scss'
 
@@ -16,14 +16,29 @@ export function TaskList() {
 
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
-  }
+      if (newTaskTitle.trim() !== "") {
+        setTasks([...tasks, {
+        id: Math.random(),
+        title: newTaskTitle,
+        isComplete: false
+        }]);
+      }  
+    }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const newArray = [...tasks];
+    const objIndex = newArray.findIndex(obj => obj.id === id);
+    newArray[objIndex].isComplete = !newArray[objIndex].isComplete;
+    setTasks(newArray);
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+    const newArray = [...tasks];
+    const objIndex = newArray.findIndex(obj => obj.id === id);
+    newArray.splice(objIndex, 1);
+    setTasks(newArray);
   }
 
   return (
